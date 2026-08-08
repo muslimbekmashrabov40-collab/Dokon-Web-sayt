@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)file:///C:/Users/nout.plus/shaxsiy%20-sayt/2-dars/index.html -->
+<html lang="uz"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muslimbek Premium Market</title>
+    <link href="./Muslimbek Premium Market_files/all.min.css" rel="stylesheet">
+    <script src="./Muslimbek Premium Market_files/qrcode.min.js.Без названия"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top left, #1e1b4b, #0f172a 60%, #030712);
+            background-attachment: fixed;
+            color: #f8fafc;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 8%;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #34d399, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .logo i {
+            -webkit-text-fill-color: initial;
+            color: #10b981;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .music-toggle-btn {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            color: #38bdf8;
+            padding: 10px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .music-toggle-btn:hover {
+            background: rgba(56, 189, 248, 0.25);
+            transform: scale(1.05);
+        }
+
+        .music-toggle-btn.playing {
+            background: rgba(52, 211, 153, 0.2);
+            border-color: #34d399;
+            color: #34d399;
+        }
+
+        .cart-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cart-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+        }
+
+        .cart-count {
+            background: #ef4444;
+            color: white;
+            border-radius: 20px;
+            padding: 2px 8px;
+            font-size: 12px;
+            font-weight: 700;
+            transition: transform 0.2s ease;
+        }
+
+        .cart-count.bump {
+            animation: bump 0.3s ease;
+        }
+
+        @keyframes bump {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(1); }
+        }
+
+        .container {
+            margin-top: 95px;
+            padding: 40px 8%;
+            flex-grow: 1;
+        }
+
+        .category-title {
+            font-size: 22px;
+            margin: 40px 0 20px 0;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .category-title i {
+            background: rgba(56, 189, 248, 0.15);
+            padding: 10px;
+            border-radius: 10px;
+            color: #38bdf8;
+            transition: transform 0.3s ease;
+        }
+
+        .category-title:hover i {
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
+            perspective: 1000px;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transition: left 0.7s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) rotateX(4deg) rotateY(-2deg);
+            border-color: rgba(52, 211, 153, 0.6);
+            box-shadow: 
+                0 20px 35px rgba(0, 0, 0, 0.5),
+                0 0 25px rgba(16, 185, 129, 0.25);
+        }
+
+        .img-container {
+            width: 100%;
+            height: 185px;
+            overflow: hidden;
+            position: relative;
+            background: #0f172a;
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.95);
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.6s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.12) rotate(1deg);
+            filter: brightness(1.1);
+        }
+
+        .badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #34d399;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            z-index: 3;
+        }
+
+        .card-body {
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #f1f5f9;
+            line-height: 1.4;
+        }
+
+        .card-price {
+            font-size: 18px;
+            color: #34d399;
+            font-weight: 800;
+            margin-bottom: 14px;
+        }
+
+        .btn-add {
+            width: 100%;
+            padding: 11px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+        }
+
+        .btn-add:hover {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 18px rgba(59, 130, 246, 0.45);
+        }
+
+        footer {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px 8%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 22px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-btn.telegram {
+            background: linear-gradient(135deg, #0088cc, #229ed9);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .social-btn.telegram:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.4);
+        }
+
+        .social-btn.instagram {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .social-btn.instagram:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(220, 39, 67, 0.4);
+        }
+
+        .footer-text {
+            color: #94a3b8;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: rgba(30, 41, 59, 0.95);
+            padding: 28px;
+            border-radius: 22px;
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 14px; right: 18px;
+            color: #94a3b8;
+            font-size: 24px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .close-btn:hover {
+            color: #f8fafc;
+            transform: rotate(90deg);
+        }
+
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            margin: 18px auto;
+            padding: 12px;
+            background: white;
+            border-radius: 14px;
+            width: fit-content;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-confirm {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+        }
+
+        .receipt {
+            background: #ffffff;
+            color: #0f172a;
+            padding: 22px;
+            border-radius: 12px;
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace;
+            max-height: 380px;
+            overflow-y: auto;
+        }
+
+        .receipt h3 { text-align: center; margin-bottom: 4px; font-size: 18px; font-weight: bold; }
+        .receipt p { font-size: 12px; margin-bottom: 4px; color: #334155; }
+        .receipt-hr { border-bottom: 1px dashed #64748b; margin: 10px 0; }
+        .receipt-item { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px; }
+        .receipt-total { display: flex; justify-content: space-between; font-weight: bold; font-size: 15px; margin-top: 10px; color: #000; }
+    </style>
+</head>
+<body>
+
+    <audio id="bgAudio" loop="" preload="auto">
+        <source src="qoshiq.mp3" type="audio/mpeg">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+    </audio>
+
+    <header>
+        <div class="logo"><i class="fas fa-shopping-basket"></i> Muslimbek Premium Market</div>
+        <div class="header-actions">
+            <button class="music-toggle-btn" id="musicBtn" onclick="toggleMusic(event)">
+                <i class="fas fa-music"></i> <span id="musicText">Musiqani chalish</span>
+            </button>
+            <button class="cart-btn" onclick="openCart()">
+                <i class="fas fa-shopping-cart"></i> Savat <span class="cart-count" id="cartCount">0</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- Kolbasa va Go'sht Mahsulotlari -->
+        <div class="category-title"><i class="fas fa-drumstick-bite"></i> Kolbasa va Go'sht Mahsulotlari</div>
+        <div class="products-grid">
+            <div class="card"><span class="badge">Halol</span><div class="img-container"><img src="./Muslimbek Premium Market_files/photo-1544025162-d76694265947"></div><div class="card-body"><div class="card-title">Dudlangan Halol Kolbasa 500g</div><div class="card-price">48,000 so'm</div><button class="btn-add" onclick="addToCart(&#39;Dudlangan Kolbasa 500g&#39;, 48000, this)">Savatga qo'shish</button></div></div>
+            <div class="card"><span class="badge">A'lo Sifat</span><div class="img-container"><img src="./Muslimbek Premium Market_files/photo-1529692236671-f1f6cf9683ba"></div><div class="card-body"><div class="card-title">Mol Go'shtidan Sosiska 400g</div><div class="card-price">32,000 so'm</div><button class="btn-add" onclick="addToCart(&#39;Mol Sosiska 400g&#39;, 32000, this)">Savatga qo'shish</button></div></div>
+            <div class="card"><span class="badge">Salami</span><div class="img-container"><img src="./Muslimbek Premium Market_files/photo-1626082927389-6cd097cdc6ec"></div><div class="card-body"><div class="card-title">Servelat Premium Kolbasa 350g</div><div class="card-price">55,000 so'm</div><button class="btn-add" onclick="addToCart(&#39;Servelat Kolbasa 350g&#39;, 55000, this)">Savatga qo'shish</button></div></div>
+            <div class="card"><span class="badge">Taza Go'sht</span><div class="img-container"><img src="./Muslimbek Premium Market_files/photo-1607623814075-e51df1bdc82f"></div><div class="card-body"><div class="card-title">Lazzatli Pishirilgan Vetchina 500g</div><div class="card-price">52,000 so'm</div><button class="btn-add" onclick="addToCart(&#39;Pishirilgan Vetchina 500g&#39;, 52000, this)">Savatga qo'shish</button></div></div>
+        </div>
+
+        <!-- Pechenye, Semichka va Snaklar -->
+        <div class="category-title"><i class="fas fa-cookie"></i> Pechenye, Semichka va Yong'oqlar</div>
+        <div class="products-grid">
+            <div class="card"><span class="badge">Qovurilgan</span><div class="img-container"><img src="./Muslimbek Premium Market_files/photo-1508061252966-f72007421370"></div><div class="card-body"><div class="card-title">Qora Quyosh Semichka 200g</div><div class="card-price">8,000 so'm</div><button class="btn-add" onclick="addToCart(&#39;Qora Semichka 200g&#39;, 8000, this)">Savatga qo'shish</button></div></div>
+            <div class="card"><span class="badge">Mazzali</span><div class="img-container"><img src="./Muslimbek Premium Market_files/photo-1499636136210-6f4ee915583e"></div><div class="card-body"><div class="card-title">Shokoladli Uy Pechenyesi 300g</div><div class="card-price">18,000 so'm</div><button class="btn-add" onclick="addToCart(&#39;Uy Pechenyesi 300g&#39;, 18000, this)">Savatga qo'shish</button></div></div>
+            <div class="card"><span class="badge">Tuzlangan</span><div class="img-container"><img src="./Muslimbek Premium Market_files/photo-1536591375315-1b8368d533dd"></div><div class="card-body"><div class="card-title">Eron Pistas va Yong'oq Mix 250g</div><div class="card-price">45,000 so'm</div><button class="btn-add" onclick="addToCart(&#39;Pista Mix 250g&#39;, 45000, this)">Savatga qo'shish</button></div></div>
+            <div class="card"><span class="badge">Oreo</span><div class="img-container"><img src="./Muslimbek Premium Market_files/photo-1558961363-fa8fdf82db35"></div><div class="card-body"><div class="card-title">Oreo Original Pechenye 154g</div><div class="card-price">14,000 so'm</div><button class="btn-add" onclick="addToCart(&#39;Oreo Pechenye 154g&#39;, 14000, this)">Savatga qo'shish</button></div></div>
+        </div>
+
+        <!-- Ichimliklar -->
+        <div class="category-title"><i class="fas fa-glass-whiskey"></i> Salqin Ichimliklar va Sharbatlar</div>
+        <div class="products-grid">
+            <div class="card"><span class="badge">Classic</span><div class="img-container"><img src="./Muslimbek Premium Market_files/photo-1622483767028-3f66f32aef97"></div><div class="card-body"><div class="card-title">Coca-Cola Classic 1.5L</div><div class="card-price">14,000 so'm</div><button class="btn-add" onclick="addToCart(&#39;Coca-Cola Classic 1.5L&#39;, 14000, this)">Savatga qo'shish</button></div></div>
+            <div class="card"><span class="badge">100% Sharbat</span><div class="img-container"><img src="./Muslimbek Premium Market_files/photo-1613478223719-2ab802602423"></div><div class="card-body"><div class="card-title">Tabiiy Apelsin Sharbati 1L</div><div class="card-price">22,000 so'm</div><button class="btn-add" onclick="addToCart(&#39;Apelsin Sharbati 1L&#39;, 22000, this)">Savatga qo'shish</button></div></div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://t.me/muslimjon890" target="_blank" class="social-btn telegram">
+                <i class="fab fa-telegram-plane"></i> Telegram: @muslimjon890
+            </a>
+            <a href="https://instagram.com/Mashrapov_770" target="_blank" class="social-btn instagram">
+                <i class="fab fa-instagram"></i> Instagram: Mashrapov_770
+            </a>
+        </div>
+
+        <div class="footer-text">© 2026 Muslimbek Premium Market. Barcha huquqlar himoyalangan.</div>
+    </footer>
+
+    <!-- Modallar -->
+    <div class="modal" id="payModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">×</span>
+            
+            <div id="paymentStep">
+                <h3 style="color: #f8fafc; font-size: 20px;">To'lov Sahifasi</h3>
+                <p style="margin-top: 8px; color: #94a3b8; font-size: 14px;">Jami to'lov summasi:</p>
+                <h2 id="totalPrice" style="color: #34d399; margin: 8px 0; font-size: 28px;">0 so'm</h2>
+                
+                <p style="font-size: 12px; color: #cbd5e1; margin-top: 10px;">To'lash uchun QR-kodni Click orqali skanerlang:</p>
+                
+                <!-- QR-kod konteyneri -->
+                <div id="qrcode"></div>
+
+                <button class="btn-confirm" onclick="confirmPayment()">
+                    <i class="fas fa-check-circle"></i> To'lovni tasdiqlash (Chek olish)
+                </button>
+            </div>
+
+            <div id="receiptStep" style="display: none;">
+                <div class="receipt">
+                    <h3>MUSLIMBEK PREMIUM MARKET</h3>
+                    <p style="text-align: center;">Farg'ona sh., Onlayn Xarid</p>
+                    <div class="receipt-hr"></div>
+                    <p>Sana: <span id="receiptDate"></span></p>
+                    <p>Mijoz: Muslimbek Mashrabov</p>
+                    <p>Holat: <b style="color: #16a34a;">TO'LANDI ✔</b></p>
+                    <div class="receipt-hr"></div>
+                    <div id="receiptItems"></div>
+                    <div class="receipt-hr"></div>
+                    <div class="receipt-total">
+                        <span>JAMI:</span>
+                        <span id="receiptTotal"></span>
+                    </div>
+                    <div class="receipt-hr"></div>
+                    <p style="text-align: center; font-size: 10px; margin-top: 8px; color: #64748b;">Xaridingiz uchun rahmat!</p>
+                </div>
+                <button class="btn-confirm" style="margin-top: 15px;" onclick="window.print()">Chekni chop etish</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('bgAudio');
+        const musicBtn = document.getElementById('musicBtn');
+        const musicText = document.getElementById('musicText');
+        let isPlaying = false;
+
+        function startAudioOnInteraction() {
+            if (!isPlaying) {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    updateMusicUI(true);
+                }).catch(err => console.log("Autoplay kutilmoqda...", err));
+            }
+            window.removeEventListener('click', startAudioOnInteraction);
+            window.removeEventListener('touchstart', startAudioOnInteraction);
+        }
+
+        window.addEventListener('click', startAudioOnInteraction);
+        window.addEventListener('touchstart', startAudioOnInteraction);
+
+        function toggleMusic(e) {
+            e.stopPropagation();
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                updateMusicUI(false);
+            } else {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    updateMusicUI(true);
+                });
+            }
+        }
+
+        function updateMusicUI(playing) {
+            if (playing) {
+                musicBtn.classList.add('playing');
+                musicText.innerText = "Musiqa ijro etilmoqda";
+                musicBtn.querySelector('i').className = "fas fa-pause";
+            } else {
+                musicBtn.classList.remove('playing');
+                musicText.innerText = "Musiqani chalish";
+                musicBtn.querySelector('i').className = "fas fa-music";
+            }
+        }
+
+        let cart = [];
+        let totalAmount = 0;
+
+        function addToCart(title, price, btnElement) {
+            cart.push({ title, price });
+            totalAmount += price;
+
+            const cartCount = document.getElementById('cartCount');
+            cartCount.innerText = cart.length;
+            cartCount.classList.remove('bump');
+            void cartCount.offsetWidth;
+            cartCount.classList.add('bump');
+
+            const originalText = btnElement.innerHTML;
+            btnElement.innerHTML = '<i class="fas fa-check"></i> Qo\'shildi!';
+            btnElement.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+
+            setTimeout(() => {
+                btnElement.innerHTML = originalText;
+                btnElement.style.background = '';
+            }, 1000);
+        }
+
+        function openCart() {
+            if (cart.length === 0) {
+                alert("Savat hali bo'sh!");
+                return;
+            }
+
+            document.getElementById('totalPrice').innerText = totalAmount.toLocaleString() + " so'm";
+            
+            // Eski QR-kodni tozalash
+            document.getElementById('qrcode').innerHTML = "";
+
+            // Dinamik Click Pay havolasi
+            const clickServiceId = "YOUR_SERVICE_ID";
+            const clickMerchantId = "YOUR_MERCHANT_ID";
+            const clickUrl = `https://my.click.uz/services/pay?service_id=${clickServiceId}&merchant_id=${clickMerchantId}&amount=${totalAmount}&transaction_param=order_${Date.now()}`;
+
+            // Yangi QR-kod hosil qilish
+            new QRCode(document.getElementById("qrcode"), {
+                text: clickUrl,
+                width: 140,
+                height: 140,
+                colorDark: "#0f172a",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            document.getElementById('paymentStep').style.display = "block";
+            document.getElementById('receiptStep').style.display = "none";
+            document.getElementById('payModal').style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById('payModal').style.display = "none";
+        }
+
+        function confirmPayment() {
+            playSuccessChime();
+
+            document.getElementById('paymentStep').style.display = "none";
+            document.getElementById('receiptStep').style.display = "block";
+
+            document.getElementById('receiptDate').innerText = new Date().toLocaleString();
+            
+            let itemsHtml = "";
+            cart.forEach(item => {
+                itemsHtml += `<div class="receipt-item"><span>${item.title}</span><span>${item.price.toLocaleString()} so'm</span></div>`;
+            });
+            document.getElementById('receiptItems').innerHTML = itemsHtml;
+            document.getElementById('receiptTotal').innerText = totalAmount.toLocaleString() + " so'm";
+
+            cart = [];
+            totalAmount = 0;
+            document.getElementById('cartCount').innerText = 0;
+        }
+
+        function playSuccessChime() {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const notes = [523.25, 659.25, 783.99, 1046.50];
+            
+            notes.forEach((freq, index) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+
+                const startTime = ctx.currentTime + (index * 0.08);
+                
+                gain.gain.setValueAtTime(0, startTime);
+                gain.gain.linearRampToValueAtTime(0.15, startTime + 0.03);
+                gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.5);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start(startTime);
+                osc.stop(startTime + 0.5);
+            });
+        }
+    </script>
+
+</body></html>
